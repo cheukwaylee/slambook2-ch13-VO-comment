@@ -10,6 +10,13 @@ set(CMAKE_CXX_FLAGS "-std=c++11 -Wall")
 set(CMAKE_CXX_FLAGS_RELEASE  "-std=c++11 -O3 -fopenmp -pthread")
 
 list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
+# list(APPEND CMAKE_MODULE_PATH /home/cw/code/slam_learning/3rdparty/g2o/cmake_modules)
+# set(G2O_ROOT /usr/local/include/g2o)
+# set(G2O_ROOT/home/cw/code/slam_learning/3rdparty/g2o) 
+# find_package(G2O REQUIRED) 
+# include_directories( 
+# ${G2O_INCLUDE_DIRS} )
+
 #为了使用g2o等库,需要配以FindG2O.cmake等文件，列出FindG2O.cmake等文件的位置
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)  #指明可执行文件的输出保存位置
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)   #指明生成的库文件的输出保存位置

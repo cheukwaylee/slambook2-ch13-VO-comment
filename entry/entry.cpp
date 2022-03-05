@@ -8,7 +8,7 @@
 // gflags库的使用说明参考： https://www.jianshu.com/p/2179938a818d
 //同上：https://blog.csdn.net/NMG_CJS/article/details/104436079?utm_medium=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-3.control&depth_1-utm_source=distribute.pc_relevant.none-task-blog-BlogCommendFromBaidu-3.control
 
-DEFINE_string(config_file, "../../config/default.yaml", "config file path"); //第三个参数是说明信息
+DEFINE_string(config_file, "../config/default.yaml", "config file path"); //第三个参数是说明信息
 
 int main(int argc, char **argv)
 {
