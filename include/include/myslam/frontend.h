@@ -10,17 +10,33 @@
 #include "myslam/camera.h"
 #include "myslam/viewer.h"
 
-namespace myslam{
-    enum class FrontendStatus { INITING, TRACKING_GOOD, TRACKING_BAD, LOST };
+// 选定前端策略：
+// 初始化：左右目的照片光流法匹配，并三角化。（注意到普通三角化得到的坐标是左图的相机坐标系坐标）
+// 追踪：只使用左目，光流法匹配，然后估计位姿
+// 追踪到的点很少，说明两帧之间差异较大，判定当前帧为关键帧，对于关键帧：
+//  ① 提取新特征点。 ② 计算这些新特征点的空间坐标（路标点）：利用右图三角化。
+//  ③ 将新的关键帧和路标点加入地图，触发一次后端优化。
+// 如果追踪失败，重置前端系统，重新初始化。
 
-    class Frontend{
+namespace myslam
+{
+    enum class FrontendStatus
+    {
+        INITING,
+        TRACKING_GOOD,
+        TRACKING_BAD,
+        LOST
+    };
+
+    class Frontend
+    {
     public:
         EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
         typedef std::shared_ptr<Frontend> Ptr;
 
         Frontend();
 
-        bool AddFrame(Frame::Ptr frame);//依次在源文件中实现各个成员函数，addframe是第一个
+        bool AddFrame(Frame::Ptr frame); //依次在源文件中实现各个成员函数，addframe是第一个
 
         void SetMap(Map::Ptr map) { map_ = map; }
 
@@ -30,24 +46,25 @@ namespace myslam{
 
         FrontendStatus GetStatus() const { return status_; }
 
-        void SetCameras(Camera::Ptr left, Camera::Ptr right) {   //这里应该是为了设定相机参数
+        void SetCameras(Camera::Ptr left, Camera::Ptr right)
+        { //这里应该是为了设定相机参数
             camera_left_ = left;
             camera_right_ = right;
         }
 
     private:
         FrontendStatus status_ = FrontendStatus::INITING;
-        Frame::Ptr current_frame_ = nullptr;  // 当前帧
-        Frame::Ptr last_frame_ = nullptr;     // 上一帧
-        Camera::Ptr camera_left_ = nullptr;   // 左侧相机，参数情况
-        Camera::Ptr camera_right_ = nullptr;  // 右侧相机，参数情况
+        Frame::Ptr current_frame_ = nullptr; // 当前帧
+        Frame::Ptr last_frame_ = nullptr;    // 上一帧
+        Camera::Ptr camera_left_ = nullptr;  // 左侧相机，参数情况
+        Camera::Ptr camera_right_ = nullptr; // 右侧相机，参数情况
 
         Map::Ptr map_ = nullptr;
 
         std::shared_ptr<Backend> backend_ = nullptr;
         std::shared_ptr<Viewer> viewer_ = nullptr;
 
-        SE3 relative_motion_;  // 当前帧与上一帧的相对运动，用于估计当前帧pose初值
+        SE3 relative_motion_; // 当前帧与上一帧的相对运动，用于估计当前帧pose初值
 
         // params
         int num_features_ = 200;
@@ -55,15 +72,15 @@ namespace myslam{
         int num_features_tracking_ = 50;
         int num_features_tracking_bad_ = 20;
         int num_features_needed_for_keyframe_ = 80;
-        int tracking_inliers_ = 0;  // inliers, used for testing new keyframes
+        int tracking_inliers_ = 0; // inliers, used for testing new keyframes
 
-        cv::Ptr<cv::GFTTDetector> gftt_;  // feature detector in opencv
-
+        cv::Ptr<cv::GFTTDetector> gftt_; // feature detector in opencv
+        // cv::Ptr<cv::FastFeatureDetector> gftt_;
 
         /**
-     * Track in normal mode
-     * @return true if success
-     */
+         * Track in normal mode
+         * @return true if success
+         */
         bool Track();
 
         /**

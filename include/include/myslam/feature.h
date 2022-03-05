@@ -7,24 +7,21 @@
 #include <opencv2/features2d.hpp>
 #include <memory>
 
-
-namespace myslam {
+namespace myslam
+{
     struct Frame;
     struct MapPoint;
 
     /**
- * 2D 特征点
- * 在三角化之后会被关联一个地图点
- */
+     * 2D 特征点
+     * 在三角化之后会被关联一个地图点
+     */
 
-
-    struct Feature {
+    struct Feature
+    {
     public:
         EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
         typedef std::shared_ptr<Feature> Ptr;
-        cv::KeyPoint position_;              // 2D提取位置
-        bool is_outlier_ = false;       // 是否为异常点
-        bool is_on_left_image_ = true;  // 标识是否提在左图，false为右图
 
         /*weak_ptr是弱智能指针对象，它不控制所指向对象生存期的智能指针，
          * 它指向由一个shared_ptr管理的智能指针。
@@ -38,16 +35,21 @@ namespace myslam {
          * weak_ptr可以使用一个非常重要的成员函数lock()从被观测的shared_ptr获得一个可用的shared_ptr对象,就像复制出一个样本一样
          */
 
-        std::weak_ptr<Frame> frame_;         // 持有该feature的frame
-        std::weak_ptr<MapPoint> map_point_;  // 关联地图点
+        // 前面提到weak_ptr不能直接定义智能指针对象，
+        // 因此这里是用weak_ptr持有这个frame的shared_ptr智能指针的值
+        std::weak_ptr<Frame> frame_;        // 持有该feature的frame
+        std::weak_ptr<MapPoint> map_point_; // 同理，持有MapPoint的智能指针的值// 关联地图点
+
+        cv::KeyPoint position_;        // 2D提取位置
+        bool is_outlier_ = false;      // 是否为异常点
+        bool is_on_left_image_ = true; // 标识是否提在左图，false为右图
 
     public:
         Feature() {}
 
         Feature(std::shared_ptr<Frame> frame, const cv::KeyPoint &kp)
-                : frame_(frame), position_(kp) {}
-
+            : frame_(frame), position_(kp) {}
     };
 }
 
-#endif  // MYSLAM_FEATURE_H
+#endif // MYSLAM_FEATURE_H

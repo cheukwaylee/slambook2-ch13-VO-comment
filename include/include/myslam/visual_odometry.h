@@ -8,17 +8,16 @@
 #include "myslam/frontend.h"
 #include "myslam/viewer.h"
 
-
-namespace myslam{
-
+namespace myslam
+{
 
     class VisualOdometry
     {
     public:
-
         EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
         typedef std::shared_ptr<VisualOdometry> Ptr;
 
+        // 构造函数，参数是配置文件路径
         /// constructor with config file
         VisualOdometry(std::string &config_path);
 
@@ -26,16 +25,15 @@ namespace myslam{
         bool Init();
 
         //在特定数据集上启动VO
-        void Run();
+        void Run(); // 运行VO
 
         //在数据集图像序列上步进
-        bool Step();
+        bool Step(); // 步进到下一帧
 
         //获取前端状态
         FrontendStatus GetFrontendStatus() const { return frontend_->GetStatus(); }
 
     private:
-
         bool inited_ = false;
         std::string config_file_path_;
 
@@ -46,9 +44,7 @@ namespace myslam{
 
         // dataset
         Dataset::Ptr dataset_ = nullptr;
-
-
     };
 }
 
-#endif  // MYSLAM_VISUAL_ODOMETRY_H
+#endif // MYSLAM_VISUAL_ODOMETRY_H

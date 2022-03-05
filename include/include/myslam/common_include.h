@@ -1,8 +1,8 @@
 /*common_include文件的存在是要将一些后续常用的头文件和数据类型都包含进来，
  * 后面就再不用重复定义了，直接包含这个头文件就可以了
  */
-#pragma once    //防止重复定义，但是只针对一个物理文件，面对copy文件的时候就失效了
-#ifndef MYSLAM_COMMON_INCLUDE_H   //针对于后面的标识符MYSLAM_COMMON_INCLUDE_H，不论有多少个copy文件，只要里面都是这个标识符就都不会出现重复定义问题
+#pragma once                    //防止重复定义，但是只针对一个物理文件，面对copy文件的时候就失效了
+#ifndef MYSLAM_COMMON_INCLUDE_H //针对于后面的标识符MYSLAM_COMMON_INCLUDE_H，不论有多少个copy文件，只要里面都是这个标识符就都不会出现重复定义问题
 #define MYSLAM_COMMON_INCLUDE_H
 
 #include <atomic>
@@ -103,10 +103,9 @@ typedef Eigen::Matrix<float, 9, 1> Vec9f;
 typedef Eigen::Matrix<float, Eigen::Dynamic, 1> VecXf;
 typedef Eigen::Matrix<float, 14, 1> Vec14f;
 
-
 typedef Sophus::SE3d SE3;
 typedef Sophus::SO3d SO3;
 
-using cv::Mat;//这句话的意思是说当我们使用Mat时，从命名空间cv中获取它，也就是说后面凡是用到Mat，指的都是cv空间中的Mat
+using cv::Mat; //这句话的意思是说当我们使用Mat时，从命名空间cv中获取它，也就是说后面凡是用到Mat，指的都是cv空间中的Mat
 
 #endif
