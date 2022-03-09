@@ -5,6 +5,7 @@
 #include "myslam/common_include.h"
 
 /// algorithm.h文件主要实现了一个三角化函数，其实个人感觉三角化算法不单独用头文件和cpp文件来做也是可行的
+// TODO 为什么不用另外弄一个cpp写函数的实现？因为是inline吗？为什么要用inline？调用很频繁吗？
 
 namespace myslam
 {

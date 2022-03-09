@@ -16,7 +16,7 @@ namespace myslam
 
         // Camera intrinsics
         double fx_ = 0, fy_ = 0, cx_ = 0, cy_ = 0, baseline_ = 0;
-
+        // Camera extrinsic
         SE3 pose_;     // extrinsic: cam wrt world
         SE3 pose_inv_; // inverse of extrinsics
 

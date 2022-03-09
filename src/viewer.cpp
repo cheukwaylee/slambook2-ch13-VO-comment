@@ -1,9 +1,10 @@
-#include "myslam/viewer.h"
 #include "myslam/feature.h"
 #include "myslam/frame.h"
 
 #include <pangolin/pangolin.h>
 #include <opencv2/opencv.hpp>
+
+#include "myslam/viewer.h"
 
 namespace myslam
 {
@@ -44,8 +45,9 @@ namespace myslam
     void Viewer::UpdateMap()
     {
         std::unique_lock<std::mutex> lck(viewer_data_mutex_);
-        assert(map_ != nullptr); // assert() 的用法像是一种"判断式编程"，在我的理解中，其表达的意思就是，
+        // assert() 的用法像是一种"判断式编程"，在我的理解中，其表达的意思就是，
         // 程序在我的假设条件下，能够正常良好的运作，其实就相当于一个 if 语句：
+        assert(map_ != nullptr);
         active_keyframes_ = map_->GetActiveKeyFrames();
 
         // active_landmarks_ = map_->GetActiveMapPoints();

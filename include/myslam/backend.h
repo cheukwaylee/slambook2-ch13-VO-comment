@@ -27,7 +27,8 @@ C++ 11对这种行为也提供了有力的支持，这就是条件变量。条�
 
 namespace myslam
 {
-    class Map;
+    // TODO 为什么要声明？
+    // class Map;
 
     class Backend
     {

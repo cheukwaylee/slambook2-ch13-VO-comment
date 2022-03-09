@@ -26,11 +26,17 @@ namespace myslam
 
         Camera::Ptr GetCamera(int camera_id) const
         {
+            /*
+            The function automatically checks whether n is within the bounds of
+            valid elements in the vector, throwing an out_of_range exception if it is not
+            (i.e., if  n is greater than, or equal to, its size).
+            This is in contrast with member operator[], that does not check against bounds.
+            */
             return cameras_.at(camera_id);
         }
 
     private:
-        std::string dataset_path_;
+        std::string dataset_path_; // /home/cw/code/slam_learning/data_odometry_gray_ch13/05
         int current_image_index_ = 0;
 
         std::vector<Camera::Ptr> cameras_;

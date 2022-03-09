@@ -25,11 +25,6 @@ namespace myslam
     public:
         EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 
-        //如果不使用override，当你手一抖，将foo()写成了f00()会怎么样呢？
-        // 结果是编译器并不会报错，因为它并不知道你的目的是重写虚函数，而是把它当成了新的函数。
-        // 如果这个虚函数很重要的话，那就会对整个程序不利。
-        //所以，override的作用就出来了，它指定了子类的这个虚函数是重写的父类的，如果你名字不小心打错了的话，编译器是不会编译通过的：
-
         virtual void setToOriginImpl() { _estimate = SE3(); }
 
         virtual void oplusImpl(const double *update)
@@ -39,6 +34,14 @@ namespace myslam
                 update[5];
             _estimate = SE3::exp(update_eigen) * _estimate;
         }
+
+        /* 如果不使用override，当你手一抖，将foo()写成了f00()会怎么样呢？
+         * 结果是编译器并不会报错，因为它并不知道你的目的是重写虚函数，而是把它当成了新的函数。
+         * 如果这个虚函数很重要的话，那就会对整个程序不利。
+         * 所以，override的作用就出来了，它指定了子类的这个虚函数是重写的父类的，
+         * 如果你名字不小心打错了的话，编译器是不会编译通过的
+         */
+
         virtual bool read(std::istream &in) override { return true; }
 
         virtual bool write(std::ostream &out) const override { return true; }

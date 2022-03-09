@@ -2,10 +2,10 @@
 #ifndef MYSLAM_VISUAL_ODOMETRY_H
 #define MYSLAM_VISUAL_ODOMETRY_H
 
+#include "myslam/frontend.h"
 #include "myslam/backend.h"
 #include "myslam/common_include.h"
 #include "myslam/dataset.h"
-#include "myslam/frontend.h"
 #include "myslam/viewer.h"
 
 namespace myslam
@@ -31,18 +31,21 @@ namespace myslam
         bool Step(); // 步进到下一帧
 
         //获取前端状态
+        // TODO 没用过？
         FrontendStatus GetFrontendStatus() const { return frontend_->GetStatus(); }
 
     private:
+        // TODO 没用过？
         bool inited_ = false;
+
+        // 构造赋值 "../config/default.yaml"
         std::string config_file_path_;
 
+        // init赋值
         Frontend::Ptr frontend_ = nullptr;
         Backend::Ptr backend_ = nullptr;
         Map::Ptr map_ = nullptr;
         Viewer::Ptr viewer_ = nullptr;
-
-        // dataset
         Dataset::Ptr dataset_ = nullptr;
     };
 }

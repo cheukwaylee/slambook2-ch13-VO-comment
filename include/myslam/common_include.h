@@ -108,4 +108,4 @@ typedef Sophus::SO3d SO3;
 
 using cv::Mat; //这句话的意思是说当我们使用Mat时，从命名空间cv中获取它，也就是说后面凡是用到Mat，指的都是cv空间中的Mat
 
-#endif
+#endif // !MYSLAM_COMMON_INCLUDE_H

@@ -10,8 +10,10 @@ namespace myslam
         if (current_frame_ == nullptr)
             return;
         // 寻找与当前帧最近与最远的两个关键帧
-        double max_dis = 0, min_dis = 9999;          // distance
-        double max_kf_id = 0, min_kf_id = 0;         // 注意这里指的是id
+        // distance
+        double max_dis = 0, min_dis = 9999;
+        // 注意这里指的是id
+        double max_kf_id = 0, min_kf_id = 0;
         auto Twc = current_frame_->Pose().inverse(); // 当前帧位姿的逆矩阵
         for (auto &kf : active_keyframes_)           // 找到了与当前帧位姿相差最大与最小的点
         {
@@ -98,25 +100,27 @@ namespace myslam
 
     void Map::InsertKeyFrame(Frame::Ptr frame)
     {
-
         // typedef std::unordered_map<unsigned long, Frame::Ptr> KeyframesType;
         //根据Map类中定义的这个unordered_map容器，我们可知插入一个关键帧需要分配给其一个容器内的索引值
 
+        // map和viewer两个类里都有一个叫做current_frame_的私有成员变量，这里要注意和Frontend里面的区别
         current_frame_ = frame;
-        // Frontend和mappoint两个类里都有一个叫做current_frame_的私有成员变量，这里要注意和Frontend里面的区分
 
         // map容器中没有找到这个关键帧的id，则插入它，并激活
         if (keyframes_.find(frame->keyframe_id_) == keyframes_.end())
         {
-            //如果key存在，则find返回key对应的迭代器，如果key不存在，则find返回unordered_map::end。
-            //因此当keyframes_.find(frame->keyframe_id_) == keyframes_.end()时，则说明这个要插入的关键帧在容器内原先不存在，需插入
+            //如果key存在，则find返回key对应的迭代器，如果key不存在，则find返回unordered_map::end
+            //说明这个要插入的关键帧在容器内原先不存在，需插入
+            // std::unordered_map<unsigned long, Frame::Ptr> 的方法insert
             keyframes_.insert(make_pair(frame->keyframe_id_, frame));
 
             //插入原先不存在的一个关键帧就是在时间上插入了一个最新的关键帧，因此这个关键帧应该放入active_keyframes中
             active_keyframes_.insert(make_pair(frame->keyframe_id_, frame));
         }
-        else // 容器中有了这个关键帧，在关键帧和激活关键帧的容器中更新帧
-        {    //找到了这个关键帧编号，则以当前要插入的关键帧对原有内容覆盖
+        // 容器中有了这个关键帧：在关键帧和激活关键帧的容器中更新帧
+        else
+        {
+            //找到了这个关键帧编号，则以当前要插入的关键帧覆盖掉原有内容
             keyframes_[frame->keyframe_id_] = frame;
             active_keyframes_[frame->keyframe_id_] = frame;
         }

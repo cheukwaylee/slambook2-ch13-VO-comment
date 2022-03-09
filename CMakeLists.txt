@@ -18,6 +18,7 @@ list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
 # ${G2O_INCLUDE_DIRS} )
 
 #为了使用g2o等库,需要配以FindG2O.cmake等文件，列出FindG2O.cmake等文件的位置
+
 set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)  #指明可执行文件的输出保存位置
 set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)   #指明生成的库文件的输出保存位置
 
@@ -75,6 +76,6 @@ enable_testing() #允许测试
 
 ############### source and test ######################
 include_directories(${PROJECT_SOURCE_DIR}/include)
-add_subdirectory(src)
 #src是myslam的子目录，所以无需附加参数，add_subdirectory是为构建添加一个子路径src，即去到src目录下找对应的CMakeLists文件进行构建编译
+add_subdirectory(src)
 add_subdirectory(entry)

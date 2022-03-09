@@ -15,7 +15,7 @@ namespace myslam
 {
 
     // forward declare
-    struct MapPoint; //这里为什么要申明MapPoint
+    struct MapPoint; // TODO 这里为什么要申明MapPoint
     struct Feature;
 
     /**
@@ -28,27 +28,34 @@ namespace myslam
     public:
         EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
         typedef std::shared_ptr<Frame> Ptr; //无论Frame还是Feature还是MapPoint，后面都是在用智能指针类型在构建对象，
-                                            //所以这里有这句智能指针定义
 
-        unsigned long id_ = 0;          // id of current frame 可以在struct内直接对成员变量直接赋值吗？
+        unsigned long id_ = 0;          // id of current frame //TODO可以在struct内直接对成员变量直接赋值吗？
         unsigned long keyframe_id_ = 0; // id of keyframe
         bool is_keyframe_ = false;
         double time_stamp_; // 时间戳，暂不使用
-        SE3 pose_;          // Tcw形式帧Pose，用李群表示，帧pose就是左目相机pose
-        // T李群形式的变换矩阵 Tcw 形式Pose： camera wrt world
-        std::mutex pose_mutex_;        // Pose数据锁
-        cv::Mat left_img_, right_img_; // 双目图像，左目，右目
 
-        std::vector<std::shared_ptr<Feature>> features_left_;  // 装填左图特征点指针的容器
-        std::vector<std::shared_ptr<Feature>> features_right_; // 左图特征点在右图中的对应特征点
-        /*shared_ptr是一种智能指针（smart pointer），作用有如同指针，但会记录有多少个shared_ptrs共同指向一个对象。这便是所谓的引用计数
+        // Tcw形式帧Pose，用李群表示，帧pose就是左目相机pose
+        // T李群形式的变换矩阵 Tcw 形式Pose： camera wrt world
+        // TODO 帧间？？帧wrt world？？
+        SE3 pose_;
+
+        // Pose数据锁
+        std::mutex pose_mutex_;
+
+        // 双目图像，左目，右目
+        cv::Mat left_img_, right_img_;
+
+        // 装填左图特征点指针的容器
+        std::vector<std::shared_ptr<Feature>> features_left_;
+        // 左图特征点在右图中的对应特征点
+        std::vector<std::shared_ptr<Feature>> features_right_;
+        /* shared_ptr是一种智能指针（smart pointer），作用有如同指针，但会记录有多少个shared_ptrs共同指向一个对象。这便是所谓的引用计数
          * （reference counting）,比如我们把只能指针赋值给另外一个对象,那么对象多了一个智能指针指向它,所以这个时候引用计数会增加一个,
          * 我们可以用shared_ptr.use_count()函数查看这个智能指针的引用计数,一旦最后一个这样的指针被销毁，
          * 也就是一旦某个对象的引用计数变为0，这个对象会被自动删除,当我们程序结束进行return的时候,智能指针的引用计数会减1,
          */
 
         //构造函数
-
         Frame() {}
 
         Frame(long id, double time_stamp, const SE3 &pose, const Mat &left,
@@ -73,16 +80,18 @@ namespace myslam
             std::unique_lock<std::mutex> lck(pose_mutex_);
             return pose_;
         }
+
         // 设置帧的位姿，并保证线程安全
         void SetPose(const SE3 &pose)
         {
             std::unique_lock<std::mutex> lck(pose_mutex_);
             pose_ = pose;
         }
-        /// 设置关键帧并分配关键帧id，具体id的计数由静态变量完成
+
+        // 设置关键帧并分配关键帧id，具体id的计数由静态变量完成
         void SetKeyFrame();
 
-        /// 工厂构建模式，分配id
+        // 工厂构建模式，分配id
         static std::shared_ptr<Frame> CreateFrame();
     };
 }

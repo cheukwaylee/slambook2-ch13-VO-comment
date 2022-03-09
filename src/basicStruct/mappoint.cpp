@@ -1,7 +1,8 @@
 ///针对mappoint.h中涉及的各类函数进行定义实现
 
-#include "myslam/mappoint.h"
 #include "myslam/feature.h"
+
+#include "myslam/basicStruct/mappoint.h"
 
 namespace myslam
 {
@@ -26,7 +27,7 @@ namespace myslam
             {
                 observations_.erase(iter); //地图点从特征观测中删除iter指向的特征
                 feat->map_point_.reset();  // iter此时和feat指向的是同一个特征对象，对地图点而言，这个特征不再是它的观测，
-                                          //  那么对特征而言，这个地图点也不再是它对应的地图点，也需要对feature对象删除map_point_
+                                           //  那么对特征而言，这个地图点也不再是它对应的地图点，也需要对feature对象删除map_point_
                 observed_times_--;
                 break; //找到要删除的feat后，将其从观测中删除，然后跳出循环，因为remove工作已完成
             }

@@ -14,7 +14,10 @@ namespace myslam
     {
         // 原子类型变量用store写入，用load读取
         backend_running_.store(true);
-        backend_thread_ = std::thread(std::bind(&Backend::BackendLoop, this)); //类成员函数需要绑定该类的指针
+        //类成员函数需要绑定该类的指针
+        backend_thread_ = std::thread(std::bind(&Backend::BackendLoop, this));
+        // Backend::BackendLoop(this) 在c++中 ， 如果回调函数是一个类的成员函数。这时想把成员函数设置给一个回调函数指针往往是不行的
+        // 因为类的成员函数，多了一个隐含的参数this。 所以直接赋值给函数指针肯定会引起编译报错。绑了之后能被外面用
         // bind函数的用法和详细参考： https://www.cnblogs.com/jialin0x7c9/p/12219239.html
         // this指针的用法和详解参考： http://c.biancheng.net/view/2226.html
     }
@@ -39,10 +42,10 @@ namespace myslam
 
     void Backend::BackendLoop()
     {
-        // load读取backend_running的值
-        // 实际上当后端在运行时，这是一个死循环函数，但是会等待前端的激活
+        // 原子类型变量用store写入，用load读取
+        // 实际上当后端在运行时，这是一个死循环函数 while(1)，但是会等待前端的激活
         // 即前端激活一次，就运行此函数，进行一次后端优化
-        while (backend_running_.load()) // load()   Read contained value
+        while (backend_running_.load()) // Read contained value
         {
             std::unique_lock<std::mutex> lock(data_mutex_);
             // wait():一般编程中都需要先检查一个条件才进入等待环节，因此在中间有一个检查时段，检查条件的时候是不安全的，需要lock

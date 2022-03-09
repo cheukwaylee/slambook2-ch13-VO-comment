@@ -10,8 +10,9 @@ namespace myslam
 {
 
     Dataset::Dataset(const std::string &dataset_path)
-        : dataset_path_(dataset_path) {}
+        : dataset_path_(dataset_path) {} // /home/cw/code/slam_learning/data_odometry_gray_ch13/05
 
+    // 读数据集的相机参数
     bool Dataset::Init()
     {
         ifstream fin(dataset_path_ + "/calib.txt");
@@ -21,8 +22,9 @@ namespace myslam
             return false;
         }
 
+        //一共有P0,P1,P2,P3四个相机，这里就是要把四个相机的参数全部读取并new Camera
         for (int i = 0; i < 4; ++i)
-        { //一共有P0,P1,P2,P3四个相机，这里就是要把四个相机的参数全部读取到
+        {
             //前三个字符是P0：所以这里定义了一个长度为3的字符数组，读完这三个字符后就遇到了第一个空格，fin将会跳过这个空格，读取参数
             char camera_name[3];
             for (int k = 0; k < 3; ++k)
@@ -45,11 +47,15 @@ namespace myslam
             Vec3 t;
             t << projection_data[3], projection_data[7], projection_data[11];
 
+            // baseline
             t = K.inverse() * t;
             /// t = K.inverse() * t,参考https://blog.csdn.net/yangziluomu/article/details/78339575
             K = K * 0.5; //因为前面你把读到的图像全部resize成了原来的一半，所以需要在内参矩阵上乘以0.5,将投影获得的像素坐标也变为原来的一半
-            Camera::Ptr new_camera(new Camera(K(0, 0), K(1, 1), K(0, 2), K(1, 2),
-                                              t.norm(), SE3(SO3(), t)));
+
+            // fx_(fx), fy_(fy), cx_(cx), cy_(cy), baseline_(baseline), pose_(pose)
+            Camera::Ptr new_camera(new Camera(K(0, 0), K(1, 1), K(0, 2), K(1, 2), t.norm(), SE3(SO3(), t)));
+
+            // dataset持有cameras_ 里面保存了各个相机的地址
             cameras_.push_back(new_camera);
             LOG(INFO) << "Camera " << i << " extrinsics: " << t.transpose();
         }
@@ -62,7 +68,6 @@ namespace myslam
 
     Frame::Ptr Dataset::NextFrame()
     {
-
         boost::format fmt("%s/image_%d/%06d.png");
 
         // boost::format的相关内容和用法参考：
@@ -111,10 +116,12 @@ namespace myslam
                    cv::INTER_NEAREST);
 
         auto new_frame = Frame::CreateFrame();
+        // static std::shared_ptr<Frame> CreateFrame() 静态成员函数，
+        // 可以直接调用（不需要对象）返回std::shared_ptr<Frame> 也就是Frame::Ptr
+
         new_frame->left_img_ = image_left_resized;
         new_frame->right_img_ = image_right_resized;
         current_image_index_++;
         return new_frame;
     }
-
 }
