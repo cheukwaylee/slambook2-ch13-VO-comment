@@ -2,6 +2,7 @@
 #define MYSLAM_ALGORITHM_H
 
 // algorithms used in myslam
+
 #include "myslam/common_include.h"
 
 /// algorithm.h文件主要实现了一个三角化函数，其实个人感觉三角化算法不单独用头文件和cpp文件来做也是可行的

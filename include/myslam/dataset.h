@@ -1,8 +1,10 @@
 #ifndef MYSLAM_DATASET_H
 #define MYSLAM_DATASET_H
-#include "myslam/camera.h"
 #include "myslam/common_include.h"
-#include "myslam/frame.h"
+
+#include "myslam/basicStruct/frame.h"
+
+#include "myslam/camera.h"
 
 ///数据集操作类
 

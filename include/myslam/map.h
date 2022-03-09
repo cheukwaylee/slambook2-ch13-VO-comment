@@ -3,8 +3,9 @@
 #define MAP_H
 
 #include "myslam/common_include.h"
-#include "myslam/frame.h"
-#include "myslam/mappoint.h"
+
+#include "myslam/basicStruct/feature.h"
+#include "myslam/basicStruct/mappoint.h"
 
 namespace myslam
 {
@@ -18,7 +19,7 @@ namespace myslam
     public:
         EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
         typedef std::shared_ptr<Map> Ptr;
-        
+
         // 为了方便查找，用哈希表的方式(容器)记录路标点、关键帧和被激活的关键帧，
         // 输入id可以在O(1)时间内找到
         // unordered_map 是一种容器，就像哈希表一样，前面的是key值，后面的是映射对象
@@ -76,7 +77,6 @@ namespace myslam
         // settings
         int num_active_keyframes_ = 7; // 激活的关键帧数量,这里的激活就是一个窗口概念
     };
-
 }
 
 #endif

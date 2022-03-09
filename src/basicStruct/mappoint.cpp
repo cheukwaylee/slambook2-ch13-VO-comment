@@ -1,8 +1,7 @@
 ///针对mappoint.h中涉及的各类函数进行定义实现
-
-#include "myslam/feature.h"
-
 #include "myslam/basicStruct/mappoint.h"
+
+#include "myslam/basicStruct/feature.h"
 
 namespace myslam
 {

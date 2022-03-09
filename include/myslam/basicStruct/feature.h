@@ -3,9 +3,10 @@
 #ifndef MYSLAM_FEATURE_H
 #define MYSLAM_FEATURE_H
 
-#include "myslam/common_include.h"
 #include <opencv2/features2d.hpp>
 #include <memory>
+
+#include "myslam/common_include.h"
 
 namespace myslam
 {

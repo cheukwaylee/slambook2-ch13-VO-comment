@@ -5,7 +5,9 @@
 #include <pangolin/pangolin.h>
 
 #include "myslam/common_include.h"
-#include "myslam/frame.h"
+
+#include "myslam/basicStruct/frame.h"
+
 #include "myslam/map.h"
 
 //接下来进入可视化环节，通过Pangolin将视觉里程计中的帧,点和行进路径可视化
@@ -54,7 +56,6 @@ namespace myslam
 
         std::mutex viewer_data_mutex_;
     };
-
 }
 
 #endif

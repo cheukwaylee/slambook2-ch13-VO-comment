@@ -5,7 +5,9 @@
 #include <opencv2/features2d.hpp>
 
 #include "myslam/common_include.h"
-#include "myslam/frame.h"
+
+#include "myslam/basicStruct/frame.h"
+
 #include "myslam/map.h"
 #include "myslam/camera.h"
 #include "myslam/viewer.h"
@@ -134,7 +136,7 @@ namespace myslam
          * Find the corresponding features in right image of current_frame_
          * @return num of features found
          */
-        int FindFeaturesInRight(); //current_frame_->features_right_
+        int FindFeaturesInRight(); // current_frame_->features_right_
 
         /**
          * Build the initial map with single image

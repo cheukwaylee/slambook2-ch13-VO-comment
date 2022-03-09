@@ -1,9 +1,11 @@
 #include "myslam/dataset.h"
-#include "myslam/frame.h"
 
 #include <boost/format.hpp>
 #include <fstream>
 #include <opencv2/opencv.hpp>
+
+#include "myslam/basicStruct/frame.h"
+
 using namespace std;
 
 namespace myslam

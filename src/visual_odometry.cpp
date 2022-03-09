@@ -1,7 +1,8 @@
-#include <chrono>
-#include "myslam/config.h"
-
 #include "myslam/visual_odometry.h"
+
+#include <chrono>
+
+#include "myslam/config.h"
 
 namespace myslam
 {

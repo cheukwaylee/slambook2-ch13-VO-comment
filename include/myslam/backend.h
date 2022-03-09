@@ -2,7 +2,9 @@
 #define MYSLAM_BACKEND_H
 
 #include "myslam/common_include.h"
-#include "myslam/frame.h"
+
+#include "myslam/basicStruct/frame.h"
+
 #include "myslam/map.h"
 #include "myslam/camera.h"
 

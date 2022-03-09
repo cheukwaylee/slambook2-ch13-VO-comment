@@ -1,10 +1,10 @@
-#include "myslam/feature.h"
-#include "myslam/frame.h"
+#include "myslam/viewer.h"
 
 #include <pangolin/pangolin.h>
 #include <opencv2/opencv.hpp>
 
-#include "myslam/viewer.h"
+#include "myslam/basicStruct/feature.h"
+#include "myslam/basicStruct/frame.h"
 
 namespace myslam
 {

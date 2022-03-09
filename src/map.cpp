@@ -1,7 +1,8 @@
 ///对map.h中声明的各类函数进行定义实现
 
 #include "myslam/map.h"
-#include "myslam/feature.h"
+
+#include "myslam/basicStruct/feature.h"
 
 namespace myslam
 {
