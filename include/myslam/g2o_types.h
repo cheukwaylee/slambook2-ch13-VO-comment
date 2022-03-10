@@ -19,9 +19,11 @@
 
 namespace myslam
 {
+    // g2o构造顶点参考： https://www.cnblogs.com/CV-life/p/10449028.html
 
+    // 待优化的变量：帧的相机位置SE3 也就是R6
     class VertexPose : public g2o::BaseVertex<6, SE3>
-    { // g2o构造顶点参考： https://www.cnblogs.com/CV-life/p/10449028.html
+    {
     public:
         EIGEN_MAKE_ALIGNED_OPERATOR_NEW;
 
@@ -47,6 +49,7 @@ namespace myslam
         virtual bool write(std::ostream &out) const override { return true; }
     };
 
+    // 待优化的变量：路标点位置x,y,z
     class VertexXYZ : public g2o::BaseVertex<3, Vec3>
     {
     public:

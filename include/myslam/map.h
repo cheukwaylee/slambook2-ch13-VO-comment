@@ -23,8 +23,8 @@ namespace myslam
         // 为了方便查找，用哈希表的方式(容器)记录路标点、关键帧和被激活的关键帧，
         // 输入id可以在O(1)时间内找到
         // unordered_map 是一种容器，就像哈希表一样，前面的是key值，后面的是映射对象
-        typedef std::unordered_map<unsigned long, MapPoint::Ptr> LandmarksType;
         typedef std::unordered_map<unsigned long, Frame::Ptr> KeyframesType;
+        typedef std::unordered_map<unsigned long, MapPoint::Ptr> LandmarksType;
 
         Map() {}
 

@@ -597,6 +597,8 @@ namespace myslam
         //双边：一个顶点为6维T，一个为3维point
         // p,l分别表示pose和landmark点维度：其中p指的是流行空间的最小维度6,分别代表平移和旋转，不管旋转用不用四元数
         typedef g2o::BlockSolver_6_3 BlockSolverType;
+
+        // TODO 后端用的是g2o::LinearSolverCSparse
         typedef g2o::LinearSolverDense<BlockSolverType::PoseMatrixType>
             LinearSolverType;
 

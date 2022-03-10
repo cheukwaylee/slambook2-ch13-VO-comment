@@ -7,20 +7,15 @@ project(myslam)
 set(CMAKE_BUILD_TYPE Release)
 
 set(CMAKE_CXX_FLAGS "-std=c++11 -Wall")
-set(CMAKE_CXX_FLAGS_RELEASE  "-std=c++11 -O3 -fopenmp -pthread")
-
-list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
-# list(APPEND CMAKE_MODULE_PATH /home/cw/code/slam_learning/3rdparty/g2o/cmake_modules)
-# set(G2O_ROOT /usr/local/include/g2o)
-# set(G2O_ROOT/home/cw/code/slam_learning/3rdparty/g2o) 
-# find_package(G2O REQUIRED) 
-# include_directories( 
-# ${G2O_INCLUDE_DIRS} )
+set(CMAKE_CXX_FLAGS_RELEASE  "-std=c++11 -O3 -fopenmp -pthread") # C++多线程
 
 #为了使用g2o等库,需要配以FindG2O.cmake等文件，列出FindG2O.cmake等文件的位置
+list(APPEND CMAKE_MODULE_PATH ${PROJECT_SOURCE_DIR}/cmake_modules)
 
-set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin)  #指明可执行文件的输出保存位置
-set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)   #指明生成的库文件的输出保存位置
+#指明可执行文件的输出保存位置
+set(EXECUTABLE_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/bin) 
+#指明生成的库文件的输出保存位置
+set(LIBRARY_OUTPUT_PATH ${PROJECT_SOURCE_DIR}/lib)  
 
 
 ############### dependencies(找到涉及的各种库) ######################
@@ -76,6 +71,7 @@ enable_testing() #允许测试
 
 ############### source and test ######################
 include_directories(${PROJECT_SOURCE_DIR}/include)
-#src是myslam的子目录，所以无需附加参数，add_subdirectory是为构建添加一个子路径src，即去到src目录下找对应的CMakeLists文件进行构建编译
-add_subdirectory(src)
+
+# add_subdirectory是为构建添加一个子路径src，即去到src目录下找对应的CMakeLists文件进行构建编译
+add_subdirectory(src) #src是myslam的子目录，所以无需附加参数
 add_subdirectory(entry)

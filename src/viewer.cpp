@@ -50,9 +50,10 @@ namespace myslam
         assert(map_ != nullptr);
         active_keyframes_ = map_->GetActiveKeyFrames();
 
-        // active_landmarks_ = map_->GetActiveMapPoints();
+        active_landmarks_ = map_->GetActiveMapPoints();
         // 这样可以显示所有地图点，同时也能够看出没有回环检测，累计误差很大
-        active_landmarks_ = map_->GetAllMapPoints(); // 改为all mappoints，显示整体地图
+        // active_landmarks_ = map_->GetAllMapPoints(); // TODO 改为all mappoints，显示整体地图
+
         map_updated_ = true;
     }
 
