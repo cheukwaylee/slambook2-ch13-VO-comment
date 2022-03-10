@@ -4,7 +4,7 @@
 
 #include "myslam/common_include.h"
 
-#include "myslam/basicStruct/feature.h"
+#include "myslam/basicStruct/frame.h"
 #include "myslam/basicStruct/mappoint.h"
 
 namespace myslam

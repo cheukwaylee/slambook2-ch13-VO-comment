@@ -11,6 +11,8 @@
 #include "myslam/map.h"
 #include "myslam/camera.h"
 #include "myslam/viewer.h"
+#include "myslam/backend.h" // TODO backend本来不包的 是竹曼加的
+// @private 为什么不能写成一样的形式？？ // std::shared_ptr<Backend> backend_ = nullptr
 
 // 基本操作单元：某一帧Frame
 
