@@ -74,4 +74,4 @@ include_directories(${PROJECT_SOURCE_DIR}/include)
 
 # add_subdirectory是为构建添加一个子路径src，即去到src目录下找对应的CMakeLists文件进行构建编译
 add_subdirectory(src) #src是myslam的子目录，所以无需附加参数
-add_subdirectory(entry)
+add_subdirectory(app)

@@ -28,28 +28,30 @@ namespace myslam
         bool Init();
 
         //在特定数据集上启动VO
-        void Run(); // 运行VO
+        // 运行VO
+        void Run();
 
         //在数据集图像序列上步进
-        bool Step(); // 步进到下一帧
+        // 步进到下一帧
+        bool Step();
 
         //获取前端状态
         // TODO 没用过？
-        FrontendStatus GetFrontendStatus() const { return frontend_->GetStatus(); }
+        // FrontendStatus GetFrontendStatus() const { return frontend_->GetStatus(); }
 
     private:
         // TODO 没用过？
-        bool inited_ = false;
+        // bool inited_ = false;
 
-        // 构造赋值 "../config/default.yaml"
+        // 构造函数赋值 "../config/default.yaml"
         std::string config_file_path_;
 
-        // init赋值
+        // init函数赋值
         Frontend::Ptr frontend_ = nullptr;
         Backend::Ptr backend_ = nullptr;
+        Dataset::Ptr dataset_ = nullptr;
         Map::Ptr map_ = nullptr;
         Viewer::Ptr viewer_ = nullptr;
-        Dataset::Ptr dataset_ = nullptr;
     };
 }
 

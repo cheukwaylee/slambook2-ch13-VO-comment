@@ -6,7 +6,6 @@
 
 namespace myslam
 {
-
     VisualOdometry::VisualOdometry(std::string &config_path)
         : config_file_path_(config_path) {}
 
@@ -59,11 +58,12 @@ namespace myslam
         viewer_->SetMap(map_);
 
         return true;
-    };
+    }
 
     void VisualOdometry::Run()
     {
-        while (1) // 循环执行步进函数
+        // 循环执行步进函数
+        while (1)
         {
             LOG(INFO) << "VO is running";
             if (Step() == false)
@@ -80,22 +80,30 @@ namespace myslam
         viewer_->Close();
 
         LOG(INFO) << "VO exit";
-    };
+    }
 
-    bool VisualOdometry::Step() // 读取数据集，并向前端添加帧
+    // 读取数据集，并向前端添加帧
+    bool VisualOdometry::Step()
     {
-        Frame::Ptr new_frame = dataset_->NextFrame(); //从数据集中读出下一帧
+        //从数据集中读出下一帧
+        Frame::Ptr new_frame = dataset_->NextFrame();
+
+        //如果读到的下一帧为空，也就是说没有读到下一帧，则无法继续跟踪，报错
         if (new_frame == nullptr)
-            return false; //如果读到的下一帧为空，也就是说没有读到下一帧，则无法继续跟踪，报错
+            return false;
 
         auto t1 = std::chrono::steady_clock::now();
-        bool success = frontend_->AddFrame(new_frame); //将新的一帧加入到前端中，进行跟踪处理,帧间位姿估计
+
+        //将新的一帧加入到前端中，进行跟踪处理,帧间位姿估计
+        bool success = frontend_->AddFrame(new_frame);
         // TODO 验证第一针初始化是否成功
-        // if (!success)
-        //     return false;
+        if (!success)
+            return false;
+
         auto t2 = std::chrono::steady_clock::now();
         auto time_used =
             std::chrono::duration_cast<std::chrono::duration<double>>(t2 - t1);
+
         LOG(INFO) << "VO cost time: " << time_used.count() << " seconds.";
 
         return true;

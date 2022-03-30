@@ -72,6 +72,7 @@ namespace myslam
     {
         //提取左目特征（通常在左目提取特征时 特征点数量是一定能保证的）
         //一个frame其实就是一个时间点，里面同时含有左，右目的图像。
+        // TODO 没有用到？
         int num_features_left = DetectFeatures();
 
         //根据左目特征在右目中找对应

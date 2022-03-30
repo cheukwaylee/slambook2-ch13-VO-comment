@@ -3,7 +3,7 @@
 # the tum dataset directory, change it to yours! 
 # dataset_dir: /media/xiang/Data/Dataset/Kitti/dataset/sequences/00
 # dataset_dir: /media/cw/SD_PSSD/moying_transfer_area_7.19/slam_learning/ch13_dataset/data_odometry_gray/dataset/sequences/05
-dataset_dir: /home/cw/code/slam_learning/data_odometry_gray_ch13/05
+dataset_dir: /home/cw/code/slam_learning/data_odometry_gray_ch13/00
 
 # camera intrinsics
 camera.fx: 517.3
